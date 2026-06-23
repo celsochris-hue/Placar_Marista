@@ -3,7 +3,7 @@ import json
 import os
 
 # Configuração inicial da página
-st.set_page_config(page_title="Placar da Gincana", page_icon="🏆", layout="centered")
+st.set_page_config(page_title="Colégio Marista João Paulo II - Placar da Gincana", page_icon="🏆", layout="centered")
 
 # Definição do caminho do ficheiro onde os dados serão guardados de forma permanente
 FICHEIRO_DADOS = "placar.json"
