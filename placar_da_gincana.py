@@ -43,7 +43,7 @@ if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
 st.title("🏆 Placar Oficial da Gincana Escolar")
-st.write("Atualização automática a cada 10 segundos.")
+st.write("Atualização automática a cada 5 segundos.")
 
 # ==========================================
 # Exibição dos Resultados Atuais (Público)
