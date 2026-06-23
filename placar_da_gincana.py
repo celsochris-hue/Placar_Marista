@@ -8,7 +8,7 @@ from streamlit_autorefresh import st_autorefresh
 st.set_page_config(page_title="Placar da Gincana", page_icon="🏆", layout="centered")
 
 # Configura a página para atualizar automaticamente a cada 10 segundos (10000 milissegundos)
-st_autorefresh(interval=10000, key="datarefresh")
+st_autorefresh(interval=5000, key="datarefresh")
 
 # Definição do caminho do ficheiro onde os dados serão guardados de forma permanente
 FICHEIRO_DADOS = "placar.json"
