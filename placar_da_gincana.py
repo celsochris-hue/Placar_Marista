@@ -1,9 +1,14 @@
 import streamlit as st
 import json
 import os
+# Importa o componente de atualização automática
+from streamlit_autorefresh import st_autorefresh
 
 # Configuração inicial da página
-st.set_page_config(page_title="Colégio Marista João Paulo II - Placar da Gincana", page_icon="🏆", layout="centered")
+st.set_page_config(page_title="Placar da Gincana", page_icon="🏆", layout="centered")
+
+# Configura a página para atualizar automaticamente a cada 10 segundos (10000 milissegundos)
+st_autorefresh(interval=10000, key="datarefresh")
 
 # Definição do caminho do ficheiro onde os dados serão guardados de forma permanente
 FICHEIRO_DADOS = "placar.json"
@@ -16,7 +21,6 @@ def carregar_placar():
             with open(FICHEIRO_DADOS, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception:
-            # Se o ficheiro estiver corrompido ou vazio, inicia com os valores padrão
             return {"Alemanha": 0, "Brasil": 0, "França": 0}
     return {"Alemanha": 0, "Brasil": 0, "França": 0}
 
@@ -31,12 +35,15 @@ def guardar_placar(placar):
 # Inicializa o estado da sessão do Streamlit carregando do ficheiro
 if "placar" not in st.session_state:
     st.session_state.placar = carregar_placar()
+else:
+    # Sempre recarrega do arquivo a cada atualização de 10s para pegar pontos novos vindos do ADM
+    st.session_state.placar = carregar_placar()
 
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
-st.title("🏆Colégio Marista João Paulo II - Placar da Gincana - 2026")
-st.write("Atualização em tempo real dos pontos das equipas.")
+st.title("🏆 Marista João Paulo II - Placar Oficial da Gincana Escolar - 2026")
+st.write("Atualização automática a cada 10 segundos.")
 
 # ==========================================
 # Exibição dos Resultados Atuais (Público)
@@ -95,9 +102,11 @@ else:
 
     with col_btn1:
         if st.button("Confirmar Pontuação", type="primary"):
-            # Atualiza os valores na memória da sessão
-            st.session_state.placar[equipa] += pontos
-            # Grava imediatamente no ficheiro local para não perder os dados
+            # Recarrega antes de somar para evitar atropelar pontos de outros ADMs
+            atual = carregar_placar()
+            atual[equipa] += pontos
+            st.session_state.placar = atual
+            # Grava imediatamente no ficheiro local
             guardar_placar(st.session_state.placar)
             st.success(f"{pontos} pontos aplicados à equipa {equipa}!")
             st.rerun()
@@ -111,7 +120,6 @@ else:
     st.write("---")
     if st.button("Resetar Placar Completo"):
         st.session_state.placar = {"Alemanha": 0, "Brasil": 0, "França": 0}
-        # Atualiza a zeragem no ficheiro local
         guardar_placar(st.session_state.placar)
         st.warning("O placar foi completamente zerado!")
         st.rerun()
