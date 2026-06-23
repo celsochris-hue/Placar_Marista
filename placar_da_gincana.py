@@ -35,7 +35,7 @@ if "placar" not in st.session_state:
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
-st.title("🏆Colégio Marista João Paulo II - Placar da Gincana")
+st.title("🏆Colégio Marista João Paulo II - Placar da Gincana - 2026")
 st.write("Atualização em tempo real dos pontos das equipas.")
 
 # ==========================================
