@@ -78,7 +78,7 @@ st.bar_chart(st.session_state.placar)
 # ==========================================
 # Área do Administrador (Protegida por Senha)
 # ==========================================
-st.header("⚙️ Painel de Controlo (Restrito)")
+st.header("⚙️ Painel de Controle (Restrito)")
 
 if not st.session_state.autenticado:
     # Formulário de Login para o Administrador
