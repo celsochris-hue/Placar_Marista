@@ -42,7 +42,7 @@ else:
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
-st.title("🏆 Placar Oficial da Gincana Escolar")
+st.title("🏆 Placar Oficial da Gincana Escolar - Marista João Paulo II - 2026")
 st.write("Atualização automática a cada 5 segundos.")
 
 # ==========================================
